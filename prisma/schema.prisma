@@ -21,15 +21,22 @@ model User {
 }
 
 model File {
-  id          String @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
-  key         String @unique
+  key         String     @unique
   contentType String
   size        String
-  slug        String @unique
+  slug        String     @unique
+  status      FileStatus @default(PROCESSING)
 
   createdAt DateTime  @default(now())
   expiresAt DateTime?
 
   @@map("files")
+}
+
+enum FileStatus {
+  VALID
+  PROCESSING
+  EXPIRED
 }

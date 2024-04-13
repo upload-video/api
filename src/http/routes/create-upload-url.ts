@@ -58,6 +58,6 @@ export async function createUploadURL(app: FastifyInstance) {
       }
     })
 
-    return { signerUrl, fileId: file.id }
+    return reply.status(201).send({ signerUrl, fileId: file.id })
   })
 }
