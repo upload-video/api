@@ -6,6 +6,7 @@ import { env } from "@/env"
 
 import { errorHandler } from "@/error-handler"
 import { createUser } from "./routes/create-user"
+import { createUploadURL } from "./routes/create-upload-url"
 
 const app = fastify()
 
@@ -19,6 +20,7 @@ app.register(jwt, {
 
 //routes
 app.register(createUser)
+app.register(createUploadURL)
 
 app.setErrorHandler(errorHandler)
 
