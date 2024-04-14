@@ -1,16 +1,14 @@
 import { FastifyInstance } from "fastify"
 
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { z } from "zod";
 
 import { db } from "@/db/connection";
-import { r2 } from "@/lib/cloudflare-r2";
-import { env } from "@/env";
 import { BadRequest } from "./_errors/bad-request";
+import { authentication } from "@/authentication";
 
 export async function updateFileStatus(app: FastifyInstance) {
   app.get('/update/:id', {
+    onRequest: [authentication]
   }, async ({ params }) => {
     const updateFileParamsSchema = z.object({
       id: z.string().cuid(),

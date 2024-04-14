@@ -8,6 +8,8 @@ import { errorHandler } from "@/error-handler"
 import { createUser } from "./routes/create-user"
 import { createUploadURL } from "./routes/create-upload-url"
 import { createDownloadURL } from "./routes/create-download-url"
+import { updateFileStatus } from "./routes/update-file-status"
+import { getAllFiles } from "./routes/get-all-files"
 
 const app = fastify()
 
@@ -23,6 +25,8 @@ app.register(jwt, {
 app.register(createUser)
 app.register(createUploadURL)
 app.register(createDownloadURL)
+app.register(updateFileStatus)
+app.register(getAllFiles)
 
 app.setErrorHandler(errorHandler)
 

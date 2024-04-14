@@ -8,8 +8,8 @@ Stack: Node.js, Fastify, Prisma, Cloudflare R2
 - [ ] Login de usuário
 - [ ] Update perfil do usuário
 - [x] Upload de arquivos no Cloudflare
-- [ ] Download de arquivos do cloudflare
-- [ ] Listar todos os arquivos do usuário
+- [x] Download de arquivos do cloudflare
+- [x] Listar todos os arquivos do usuário
 - [ ] Excluir os arquivos do usuário
 
 ## Requisitos

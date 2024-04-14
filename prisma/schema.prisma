@@ -17,6 +17,8 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
+  files File[]
+
   @@map("users")
 }
 
@@ -26,11 +28,14 @@ model File {
   key         String     @unique
   contentType String
   size        String
-  slug        String     @unique
+  slug        String
   status      FileStatus @default(PROCESSING)
 
   createdAt DateTime  @default(now())
   expiresAt DateTime?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
 
   @@map("files")
 }

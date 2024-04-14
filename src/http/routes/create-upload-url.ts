@@ -11,11 +11,15 @@ import { generateSlug } from "@/utils/generate-slug";
 import { r2 } from "@/lib/cloudflare-r2";
 import { env } from "@/env";
 import { db } from "@/db/connection";
+import { userPayload } from "@/utils/auth";
 
 export async function createUploadURL(app: FastifyInstance) {
   app.post('/uploads', {
     onRequest: [authentication]
-  }, async ({ body }, reply) => {
+  }, async ({ body, user }, reply) => {
+
+    const { sub: userId } = user as userPayload
+
     const uploadBodySchema = z.object({
       name: z.string().min(1, { message: "Insira um nome válido para o arquivo." }),
       contentType: z.string().regex(/\w+\/[-+.\w]+/),
@@ -33,7 +37,7 @@ export async function createUploadURL(app: FastifyInstance) {
       cleanedName = name.replace(/\.mp4/, '')
     }
 
-    slug = generateSlug(cleanedName ? cleanedName : name).concat(fileKey)
+    slug = generateSlug(cleanedName ? cleanedName : name)
 
     const signerUrl = await getSignedUrl(
       r2,
@@ -55,6 +59,7 @@ export async function createUploadURL(app: FastifyInstance) {
         slug,
         key: fileKey,
         expiresAt,
+        userId,
       }
     })
 
