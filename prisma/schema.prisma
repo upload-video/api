@@ -17,7 +17,8 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  files File[]
+  files     File[]
+  authLinks AuthLink[]
 
   @@map("users")
 }
@@ -44,4 +45,13 @@ enum FileStatus {
   VALID
   PROCESSING
   EXPIRED
+}
+
+model AuthLink {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  createdAt DateTime @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }

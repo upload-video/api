@@ -10,6 +10,8 @@ import { createUploadURL } from "./routes/create-upload-url"
 import { createDownloadURL } from "./routes/create-download-url"
 import { updateFileStatus } from "./routes/update-file-status"
 import { getAllFiles } from "./routes/get-all-files"
+import { sendAuthenticationLink } from "./routes/send-authentication-link"
+import { authenticateFromLink } from "./routes/authenticate-from-link"
 
 const app = fastify()
 
@@ -27,6 +29,8 @@ app.register(createUploadURL)
 app.register(createDownloadURL)
 app.register(updateFileStatus)
 app.register(getAllFiles)
+app.register(sendAuthenticationLink)
+app.register(authenticateFromLink)
 
 app.setErrorHandler(errorHandler)
 
