@@ -5,7 +5,7 @@ Stack: Node.js, Fastify, Prisma, Cloudflare R2
 ## Features (rotas)
 
 - [x] Criação de usuário
-- [ ] Login de usuário
+- [x] Login de usuário
 - [ ] Update perfil do usuário
 - [x] Upload de arquivos no Cloudflare
 - [x] Download de arquivos do cloudflare

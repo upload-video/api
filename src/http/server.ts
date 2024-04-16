@@ -12,6 +12,8 @@ import { updateFileStatus } from "./routes/update-file-status"
 import { getAllFiles } from "./routes/get-all-files"
 import { sendAuthenticationLink } from "./routes/send-authentication-link"
 import { authenticateFromLink } from "./routes/authenticate-from-link"
+import { deleteFileById } from "./routes/delete-file"
+import { expiredFileAutomatically } from "./routes/expired-file-automatically"
 
 const app = fastify()
 
@@ -31,11 +33,17 @@ app.register(updateFileStatus)
 app.register(getAllFiles)
 app.register(sendAuthenticationLink)
 app.register(authenticateFromLink)
+app.register(deleteFileById)
 
 app.setErrorHandler(errorHandler)
+
+expiredFileAutomatically()
+  .then(() => {
+    console.log('🔥 Executed!')
+  })
 
 app.listen({
   port: 3333,
   host: '0.0.0.0'
 })
-.then(() => console.log('🔥 HTTP Server Running...'))
+  .then(() => console.log('🔥 HTTP Server Running...'))

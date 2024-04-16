@@ -28,7 +28,7 @@ export async function createDownloadURL(app: FastifyInstance) {
       throw new BadRequest('The file not found.')
     }
 
-    const signerUrl = await getSignedUrl(
+    const signedUrl = await getSignedUrl(
       r2,
       new GetObjectCommand({
         Bucket: env.CLOUDFLARE_BUCKET_NAME,
@@ -37,6 +37,6 @@ export async function createDownloadURL(app: FastifyInstance) {
       { expiresIn: 60 * 10 }
     )
 
-    return reply.redirect(301, signerUrl)
+    return reply.redirect(301, signedUrl)
   })
 }

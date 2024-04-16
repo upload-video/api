@@ -7,7 +7,7 @@ import { BadRequest } from "./_errors/bad-request";
 import { authentication } from "@/authentication";
 
 export async function updateFileStatus(app: FastifyInstance) {
-  app.get('/update/:id', {
+  app.put('/update/:id', {
     onRequest: [authentication]
   }, async ({ params }) => {
     const updateFileParamsSchema = z.object({

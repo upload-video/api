@@ -39,7 +39,7 @@ export async function createUploadURL(app: FastifyInstance) {
 
     slug = generateSlug(cleanedName ? cleanedName : name)
 
-    const signerUrl = await getSignedUrl(
+    const signedUrl = await getSignedUrl(
       r2,
       new PutObjectCommand({
         Bucket: env.CLOUDFLARE_BUCKET_NAME,
@@ -63,6 +63,6 @@ export async function createUploadURL(app: FastifyInstance) {
       }
     })
 
-    return reply.status(201).send({ signerUrl, fileId: file.id })
+    return reply.status(201).send({ signedUrl, fileId: file.id })
   })
 }

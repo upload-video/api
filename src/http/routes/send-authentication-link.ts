@@ -43,7 +43,7 @@ export async function sendAuthenticationLink(app: FastifyInstance) {
 
     console.log(authLink.toString())
 
-    const resendEmail = await resend.emails.send({
+    await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: '[upload.video] Link para login',
@@ -52,7 +52,5 @@ export async function sendAuthenticationLink(app: FastifyInstance) {
         authLink: authLink.toString()
       })
     })
-
-    return { resendEmail }
   })
 }
