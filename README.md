@@ -10,22 +10,22 @@ Stack: Node.js, Fastify, Prisma, Cloudflare R2
 - [x] Upload de arquivos no Cloudflare
 - [x] Download de arquivos do cloudflare
 - [x] Listar todos os arquivos do usuário
-- [ ] Excluir os arquivos do usuário
+- [x] Excluir os arquivos do usuário automaticamente
 
 ## Requisitos
 
 ### Requisitos Funcionais (RFs):
-- [ ] O usuário pode realizar novos uploads;
-- [ ] O usuário pode visualizar os últimos uploads realizados;
+- [x] O usuário pode realizar novos uploads;
+- [x] O usuário pode visualizar os últimos uploads realizados;
 
 ### Regras de Negócio (RNs):
-- [ ] Os uploads devem ser expirados automaticamente após 14 dias;
-- [ ] Só deve ser possível visualizar uploads não expirados;
-- [ ] Só deve ser possível realizar upload de arquivos com o padrão (mp4) correto;
-- [ ] Só deve ser possível upload de arquivos até 1gb cada;
+- [x] Deve ser possível expirados automaticamente após 14 dias;
+- [x] Deve ser possível visualizar uploads não expirados;
+- [x] Deve ser possível realizar upload de arquivos com o padrão (mp4) correto;
+- [ ] Deve ser possível realizar upload de arquivos até 1gb cada;
 
 ### Requisitos Não Funcionais (RNFs):
-- [ ] Os links para compartilhamento devem ser assinados evitando acesso público;
+- [x] Os links para compartilhamento devem ser assinados evitando acesso público;
 
 ## Importante
 

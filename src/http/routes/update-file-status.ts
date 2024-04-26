@@ -4,12 +4,9 @@ import { z } from "zod";
 
 import { db } from "@/db/connection";
 import { BadRequest } from "./_errors/bad-request";
-import { authentication } from "@/authentication";
 
 export async function updateFileStatus(app: FastifyInstance) {
-  app.put('/update/:id', {
-    onRequest: [authentication]
-  }, async ({ params }) => {
+  app.put('/update/:id', async ({ params }) => {
     const updateFileParamsSchema = z.object({
       id: z.string().cuid(),
     })

@@ -45,7 +45,7 @@ export async function sendAuthenticationLink(app: FastifyInstance) {
 
     await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: email,
+      to: 'marcospaullo552@gmail.com',
       subject: '[upload.video] Link para login',
       react: AuthenticationMagicLinkTemplate({
         userEmail: email,

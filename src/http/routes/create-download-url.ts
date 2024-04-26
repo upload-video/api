@@ -8,10 +8,10 @@ import { db } from "@/db/connection";
 import { r2 } from "@/lib/cloudflare-r2";
 import { env } from "@/env";
 import { BadRequest } from "./_errors/bad-request";
+import dayjs from "dayjs";
 
 export async function createDownloadURL(app: FastifyInstance) {
-  app.get('/uploads/:id', {
-  }, async ({ params }, reply) => {
+  app.get('/uploads/:id', async ({ params }, reply) => {
     const getFileParamsSchema = z.object({
       id: z.string().cuid(),
     })
@@ -26,6 +26,10 @@ export async function createDownloadURL(app: FastifyInstance) {
 
     if (!file) {
       throw new BadRequest('The file not found.')
+    }
+
+    if (dayjs(new Date()).diff(file.createdAt) > 14 || file.status === 'EXPIRED' || file.status === 'PROCESSING') {
+      throw new BadRequest('The file has expired.')
     }
 
     const signedUrl = await getSignedUrl(

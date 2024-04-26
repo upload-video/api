@@ -2,6 +2,7 @@ import { db } from "@/db/connection";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { BadRequest } from "./_errors/bad-request";
+import { userPayload } from "@/utils/auth";
 
 export async function createUser(app: FastifyInstance) {
   const { jwt } = app
@@ -31,15 +32,22 @@ export async function createUser(app: FastifyInstance) {
       }
     })
 
-    const token = jwt.sign({
+    const payload: userPayload = {
+      avatar: user.avatarUrl ?? '',
       email: user.email,
       name: user.name,
-      avatar: user.avatarUrl
-    }, {
-      sub: user.id,
-      expiresIn: '30 days'
-    })
+      sub: user.id
+    }
 
-    return reply.status(201).send({ token })
+    // const token = jwt.sign({
+    //   email: user.email,
+    //   name: user.name,
+    //   avatar: user.avatarUrl
+    // }, {
+    //   sub: user.id,
+    //   expiresIn: '30 days'
+    // })
+
+    return reply.status(201)
   })
 }

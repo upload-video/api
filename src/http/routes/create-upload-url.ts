@@ -6,19 +6,18 @@ import dayjs from "dayjs";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-import { authentication } from "@/authentication";
 import { generateSlug } from "@/utils/generate-slug";
 import { r2 } from "@/lib/cloudflare-r2";
 import { env } from "@/env";
 import { db } from "@/db/connection";
-import { userPayload } from "@/utils/auth";
 
 export async function createUploadURL(app: FastifyInstance) {
   app.post('/uploads', {
-    onRequest: [authentication]
-  }, async ({ body, user }, reply) => {
+  }, async (request, reply) => {
 
-    const { sub: userId } = user as userPayload
+    const { sub: userId } = await request.getCurrentUser()
+
+    console.log(`UserID: ${userId}`)
 
     const uploadBodySchema = z.object({
       name: z.string().min(1, { message: "Insira um nome válido para o arquivo." }),
@@ -26,7 +25,7 @@ export async function createUploadURL(app: FastifyInstance) {
       size: z.number(),
     })
 
-    const { name, contentType, size } = uploadBodySchema.parse(body)
+    const { name, contentType, size } = uploadBodySchema.parse(request.body)
 
     const fileKey = randomUUID()
 

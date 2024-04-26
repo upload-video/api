@@ -2,22 +2,22 @@ import { FastifyInstance } from "fastify"
 import z from "zod";
 
 import { db } from "@/db/connection";
-import { authentication } from "@/authentication";
-import { userPayload } from "@/utils/auth";
+import { auth } from "../middlewares/auth";
 
 export async function getAllFiles(app: FastifyInstance) {
-  app.get('/files', {
-    onRequest: [authentication]
-  }, async ({ user, query }, reply) => {
-
+  app
+  .register(auth)
+  .get('/files', async (request, reply) => {
     const queryPaginationSchema = z.object({
       query: z.string().nullish(),
       pageIndex: z.string().nullish().default('0').transform(Number)
     })
 
-    const { pageIndex, query: searchQuery } = queryPaginationSchema.parse(query)
+    const { pageIndex, query: searchQuery } = queryPaginationSchema.parse(request.query)
 
-    const { sub: userId } = user as userPayload
+    const { sub: userId } = await request.getCurrentUser()
+
+    console.log(`UserID: ${userId}`)
 
     const [files, count] = await Promise.all([
       await db.file.findMany({

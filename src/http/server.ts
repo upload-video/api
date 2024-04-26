@@ -1,6 +1,7 @@
-import fastify from "fastify"
+import fastify, { FastifyReply, FastifyRequest } from "fastify"
 import cors from "@fastify/cors"
 import jwt from "@fastify/jwt"
+import cookie from "@fastify/cookie"
 
 import { env } from "@/env"
 
@@ -15,6 +16,10 @@ import { authenticateFromLink } from "./routes/authenticate-from-link"
 import { deleteFileById } from "./routes/delete-file"
 import { expiredFileAutomatically } from "./routes/expired-file-automatically"
 
+import { Unauthorized } from "./routes/_errors/unauthorized"
+import { userPayload } from "@/utils/auth"
+import { signOut } from "./routes/sign-out"
+
 const app = fastify()
 
 app.register(cors, {
@@ -23,6 +28,11 @@ app.register(cors, {
 
 app.register(jwt, {
   secret: env.JWT_SECRET,
+})
+
+app.register(cookie, {
+  secret: env.JWT_SECRET,
+  parseOptions: {}
 })
 
 //routes
@@ -34,13 +44,12 @@ app.register(getAllFiles)
 app.register(sendAuthenticationLink)
 app.register(authenticateFromLink)
 app.register(deleteFileById)
+app.register(signOut)
 
 app.setErrorHandler(errorHandler)
 
 expiredFileAutomatically()
-  .then(() => {
-    console.log('🔥 Executed!')
-  })
+  .then()
 
 app.listen({
   port: 3333,
