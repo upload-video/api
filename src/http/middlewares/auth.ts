@@ -46,7 +46,7 @@ export const auth = fastifyPlugin(async (app: FastifyInstance) => {
 
     request.signOut = async () => {
       try {
-        await reply.clearCookie('auth')
+        reply.clearCookie('auth')
       } catch (error) {
         throw new BadRequest('Error during finishing session.')
       }

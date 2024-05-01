@@ -7,7 +7,7 @@ export async function signOut(app: FastifyInstance) {
     .post('/sign-out', async ({ signOut }, reply) => {
       try {
         await signOut()
-        return reply.status(200).send({ message: "success" })
+        return reply.status(200)
       } catch (error) {
         console.log(error)
       }
