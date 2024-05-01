@@ -15,8 +15,8 @@ import { sendAuthenticationLink } from "./routes/send-authentication-link"
 import { authenticateFromLink } from "./routes/authenticate-from-link"
 import { deleteFileById } from "./routes/delete-file"
 import { expiredFileAutomatically } from "./routes/expired-file-automatically"
-
 import { signOut } from "./routes/sign-out"
+import { getProfile } from "./routes/get-profile"
 
 const app = fastify()
 
@@ -48,6 +48,7 @@ app.register(sendAuthenticationLink)
 app.register(authenticateFromLink)
 app.register(deleteFileById)
 app.register(signOut)
+app.register(getProfile)
 
 app.setErrorHandler(errorHandler)
 
