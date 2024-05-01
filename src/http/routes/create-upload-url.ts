@@ -10,14 +10,15 @@ import { generateSlug } from "@/utils/generate-slug";
 import { r2 } from "@/lib/cloudflare-r2";
 import { env } from "@/env";
 import { db } from "@/db/connection";
+import { auth } from "../middlewares/auth";
 
 export async function createUploadURL(app: FastifyInstance) {
-  app.post('/uploads', {
+  app
+  .register(auth)
+  .post('/uploads', {
   }, async (request, reply) => {
 
     const { sub: userId } = await request.getCurrentUser()
-
-    console.log(`UserID: ${userId}`)
 
     const uploadBodySchema = z.object({
       name: z.string().min(1, { message: "Insira um nome válido para o arquivo." }),
