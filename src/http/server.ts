@@ -16,14 +16,17 @@ import { authenticateFromLink } from "./routes/authenticate-from-link"
 import { deleteFileById } from "./routes/delete-file"
 import { expiredFileAutomatically } from "./routes/expired-file-automatically"
 
-import { Unauthorized } from "./routes/_errors/unauthorized"
-import { userPayload } from "@/utils/auth"
 import { signOut } from "./routes/sign-out"
 
 const app = fastify()
 
 app.register(cors, {
-  origin: '*'
+  origin: [
+    env.AUTH_REDIRECT_URL
+  ],
+  credentials: true,
+  allowedHeaders: ['content-type'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
 })
 
 app.register(jwt, {
