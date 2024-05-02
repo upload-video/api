@@ -6,7 +6,7 @@ import { db } from "@/db/connection";
 import { BadRequest } from "./_errors/bad-request";
 
 export async function updateFileStatus(app: FastifyInstance) {
-  app.put('/update/:id', async ({ params }) => {
+  app.put('/status/:id', async ({ params }) => {
     const updateFileParamsSchema = z.object({
       id: z.string().cuid(),
     })

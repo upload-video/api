@@ -28,7 +28,7 @@ export async function createDownloadURL(app: FastifyInstance) {
       throw new BadRequest('The file not found.')
     }
 
-    if (dayjs(new Date()).diff(file.createdAt) > 14 || file.status === 'EXPIRED' || file.status === 'PROCESSING') {
+    if (file.status === 'EXPIRED' || file.status === 'PROCESSING') {
       throw new BadRequest('The file has expired.')
     }
 
